@@ -12,6 +12,10 @@ namespace Utils
     public class Randoms
     {
         /// <summary>
+        /// 字符集
+        /// </summary>
+        const string allChars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+        /// <summary>
         /// 字符集(字母)
         /// </summary>
         const string letterChars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
@@ -45,8 +49,43 @@ namespace Utils
                 random.GetBytes(bytes);
             }
 
+            return new string(bytes.Select(x => allChars[x % allChars.Length]).ToArray());
+        }
+
+        /// <summary>
+        /// 生成随机(字母)字符串
+        /// </summary>
+        /// <param name="length">长度</param>
+        /// <returns></returns>
+        public static string GenerateLetterString(int length)
+        {
+            var bytes = new byte[length];
+
+            using (var random = RandomNumberGenerator.Create())
+            {
+                random.GetBytes(bytes);
+            }
+
             return new string(bytes.Select(x => letterChars[x % letterChars.Length]).ToArray());
         }
+
+        /// <summary>
+        /// 生成随机(数字)字符串
+        /// </summary>
+        /// <param name="length">长度</param>
+        /// <returns></returns>
+        public static string GenerateNumberString(int length)
+        {
+            var bytes = new byte[length];
+
+            using (var random = RandomNumberGenerator.Create())
+            {
+                random.GetBytes(bytes);
+            }
+
+            return new string(bytes.Select(x => numberChars[x % numberChars.Length]).ToArray());
+        }
+
 
         /// <summary>
         /// 生成随机数字
@@ -67,23 +106,6 @@ namespace Utils
         {
             Random random = new Random();
             return random.Next(minValue, MaxValue);
-        }
-
-        /// <summary>
-        /// 随机数字字符串
-        /// </summary>
-        /// <param name="length">长度</param>
-        /// <returns></returns>
-        public static string GenerateNumberString(int length)
-        {
-            var bytes = new byte[length];
-
-            using (var random = RandomNumberGenerator.Create())
-            {
-                random.GetBytes(bytes);
-            }
-
-            return new string(bytes.Select(x => numberChars[x % numberChars.Length]).ToArray());
         }
 
 
