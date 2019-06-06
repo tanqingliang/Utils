@@ -68,25 +68,39 @@ namespace Demo
             // Console.WriteLine($"Base64Decode: {data}");
 
 
-            var obj = new TestModel()
-            {
-                Name = "test"
-            };
-            var data = Utils.Serialize.JsonSerializeObject(obj);
-            Console.WriteLine($"JsonSerializeObject: {data}");
-            obj = Utils.Serialize.JsonDeserializeObject<TestModel>(data);
-            Console.WriteLine($"JsonDeserializeObject: {obj.Name}");
+            // var obj = new TestModel()
+            // {
+            //     Name = "test"
+            // };
+            // var data = Utils.Serialize.JsonSerializeObject(obj);
+            // Console.WriteLine($"JsonSerializeObject: {data}");
+            // obj = Utils.Serialize.JsonDeserializeObject<TestModel>(data);
+            // Console.WriteLine($"JsonDeserializeObject: {obj.Name}");
 
-            Console.WriteLine($"JsonDeserializeXmlNode: {Utils.Serialize.JsonDeserializeXmlNode(data)}");
+            // Console.WriteLine($"JsonDeserializeXmlNode: {Utils.Serialize.JsonDeserializeXmlNode(data)}");
 
 
-            data = Utils.Serialize.XmlSerializeObject(obj);
-            Console.WriteLine($"XmlSerializeObject: {data}");
-            
-            Console.WriteLine($"JsonSerializeXmlNode: {Utils.Serialize.JsonSerializeXmlNode(data)}");
+            // data = Utils.Serialize.XmlSerializeObject(obj);
+            // Console.WriteLine($"XmlSerializeObject: {data}");
 
-            var newObj = Utils.Serialize.XmlDeserializeObject<TestModel>(data);
-            Console.WriteLine($"XmlDeserializeObject: {newObj.Name}");
+            // Console.WriteLine($"JsonSerializeXmlNode: {Utils.Serialize.JsonSerializeXmlNode(data)}");
+
+            // var newObj = Utils.Serialize.XmlDeserializeObject<TestModel>(data);
+            // Console.WriteLine($"XmlDeserializeObject: {newObj.Name}");
+
+            var dt = DateTime.Now;
+            Console.WriteLine($"dt: {dt}");
+            // var data = Utils.TimeTools.ToUnixTimeStamp(dt);
+            // Console.WriteLine($"ToUnixTimeStamp: {data}");
+            // dt = Utils.TimeTools.ToLocalTimeTime(data);
+            // Console.WriteLine($"ToLocalTimeTime: {dt}");
+            dt = DateTime.Parse("2019-07-01");
+            Console.WriteLine($"IsToday: {Utils.TimeTools.IsToday(dt)}");
+            Console.WriteLine($"GetMonday: {Utils.TimeTools.GetMonday(dt)}");
+            Console.WriteLine($"GetMonthFirstDay: {Utils.TimeTools.GetMonthFirstDay(dt)}");
+            Console.WriteLine($"GetQuarterFirstDay: {Utils.TimeTools.GetQuarterFirstDay(dt)}");
+            Console.WriteLine($"GetYearsFirstDay: {Utils.TimeTools.GetYearsFirstDay(dt)}");
+
 
 
         }

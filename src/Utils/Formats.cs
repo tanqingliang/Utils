@@ -14,7 +14,7 @@ namespace Utils
     /// <summary>
     /// 格式化
     /// </summary>
-    public class Format
+    public class Formats
     {
 
 
