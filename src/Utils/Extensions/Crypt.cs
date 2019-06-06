@@ -167,24 +167,7 @@ namespace Utils
         }
 
 
-        /// <summary>
-        /// Base64 加密
-        /// </summary>
-        /// <param name="input">加密内容</param>
-        /// <returns></returns>
-        public static string Base64Encrypt(this string input)
-        {
-            return Crypt.Base64Encrypt(input);
-        }
-        /// <summary>
-        /// Base64 解密
-        /// </summary>
-        /// <param name="input">解密内容</param>
-        /// <returns></returns>
-        public static string Base64Decrypt(this string input)
-        {
-            return Crypt.Base64Decrypt(input);
-        }
+
 
     }
 }

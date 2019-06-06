@@ -5,6 +5,7 @@ namespace Utils
     using System.Linq;
     using System.Text;
     using System.IO;
+    using System.Net;
     using System.Security.Cryptography;
 
     /// <summary>
@@ -411,32 +412,7 @@ namespace Utils
         }
 
 
-        /// <summary>
-        /// Base64 加密
-        /// </summary>
-        /// <param name="input">加密内容</param>
-        /// <returns></returns>
-        public static string Base64Encrypt(string input)
-        {
-            if (string.IsNullOrEmpty(input))
-                return string.Empty;
 
-            byte[] bytes = Encoding.UTF8.GetBytes(input);
-            return Convert.ToBase64String(bytes);
-        }
-        /// <summary>
-        /// Base64 解密
-        /// </summary>
-        /// <param name="input">解密内容</param>
-        /// <returns></returns>
-        public static string Base64Decrypt(string input)
-        {
-            if (string.IsNullOrEmpty(input))
-                return string.Empty;
-
-            byte[] bytes = Convert.FromBase64String(input);
-            return Encoding.UTF8.GetString(bytes);
-        }
 
 
 

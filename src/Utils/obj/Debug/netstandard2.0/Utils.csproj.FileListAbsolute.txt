@@ -1,9 +1,0 @@
-/Users/tanqingliang/Project/Utils/src/Utils/bin/Debug/netstandard2.0/Utils.deps.json
-/Users/tanqingliang/Project/Utils/src/Utils/bin/Debug/netstandard2.0/Utils.dll
-/Users/tanqingliang/Project/Utils/src/Utils/bin/Debug/netstandard2.0/Utils.pdb
-/Users/tanqingliang/Project/Utils/src/Utils/obj/Debug/netstandard2.0/Utils.csprojAssemblyReference.cache
-/Users/tanqingliang/Project/Utils/src/Utils/obj/Debug/netstandard2.0/Utils.csproj.CoreCompileInputs.cache
-/Users/tanqingliang/Project/Utils/src/Utils/obj/Debug/netstandard2.0/Utils.AssemblyInfoInputs.cache
-/Users/tanqingliang/Project/Utils/src/Utils/obj/Debug/netstandard2.0/Utils.AssemblyInfo.cs
-/Users/tanqingliang/Project/Utils/src/Utils/obj/Debug/netstandard2.0/Utils.dll
-/Users/tanqingliang/Project/Utils/src/Utils/obj/Debug/netstandard2.0/Utils.pdb
