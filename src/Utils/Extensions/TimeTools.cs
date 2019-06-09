@@ -17,7 +17,7 @@ namespace Utils
         /// <returns></returns>
         public static long ToUnixTimeStamp(this DateTime dt)
         {
-            return TimeTools.ToUnixTimeStamp(dt);
+            return TimeHelper.ToUnixTimeStamp(dt);
         }
 
         /// <summary>
@@ -27,7 +27,7 @@ namespace Utils
         /// <returns></returns>
         public static DateTime ToLocalTimeTime(this long unix)
         {
-            return TimeTools.ToLocalTimeTime(unix);
+            return TimeHelper.ToLocalTimeTime(unix);
         }
 
 
@@ -38,7 +38,7 @@ namespace Utils
         /// <returns></returns>
         public static bool IsToday(this DateTime dt)
         {
-            return TimeTools.IsToday(dt);
+            return TimeHelper.IsToday(dt);
         }
 
 
@@ -49,7 +49,7 @@ namespace Utils
         /// <returns></returns>
         public static DateTime GetMonday(this DateTime dt)
         {
-            return TimeTools.GetMonday(dt);
+            return TimeHelper.GetMonday(dt);
         }
 
         /// <summary>
@@ -59,7 +59,7 @@ namespace Utils
         /// <returns></returns>
         public static DateTime GetMonthFirstDay(this DateTime dt)
         {
-            return TimeTools.GetMonthFirstDay(dt);
+            return TimeHelper.GetMonthFirstDay(dt);
         }
 
         /// <summary>
@@ -69,7 +69,7 @@ namespace Utils
         /// <returns></returns>
         public static DateTime GetQuarterFirstDay(this DateTime dt)
         {
-            return TimeTools.GetQuarterFirstDay(dt);
+            return TimeHelper.GetQuarterFirstDay(dt);
 
         }
 
@@ -80,7 +80,7 @@ namespace Utils
         /// <returns></returns>
         public static DateTime GetYearsFirstDay(this DateTime dt)
         {
-            return TimeTools.GetYearsFirstDay(dt);
+            return TimeHelper.GetYearsFirstDay(dt);
         }
 
         /// <summary>
@@ -90,7 +90,7 @@ namespace Utils
         /// <returns></returns>
         public static string GetFromNow(this DateTime dt)
         {
-            return TimeTools.GetFromNow(dt);
+            return TimeHelper.GetFromNow(dt);
         }
 
 

@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Security.Cryptography;
-
+using Utils;
 
 namespace Demo
 {
@@ -88,20 +88,25 @@ namespace Demo
             // var newObj = Utils.Serialize.XmlDeserializeObject<TestModel>(data);
             // Console.WriteLine($"XmlDeserializeObject: {newObj.Name}");
 
-            var dt = DateTime.Now;
-            Console.WriteLine($"dt: {dt}");
-            // var data = Utils.TimeTools.ToUnixTimeStamp(dt);
+            // var dt = DateTime.Now;
+            // Console.WriteLine($"dt: {dt}");
+            // var data = Utils.TimeHelper.ToUnixTimeStamp(dt);
             // Console.WriteLine($"ToUnixTimeStamp: {data}");
-            // dt = Utils.TimeTools.ToLocalTimeTime(data);
+            // dt = Utils.TimeHelper.ToLocalTimeTime(data);
             // Console.WriteLine($"ToLocalTimeTime: {dt}");
-            dt = DateTime.Parse("2019-07-01");
-            Console.WriteLine($"IsToday: {Utils.TimeTools.IsToday(dt)}");
-            Console.WriteLine($"GetMonday: {Utils.TimeTools.GetMonday(dt)}");
-            Console.WriteLine($"GetMonthFirstDay: {Utils.TimeTools.GetMonthFirstDay(dt)}");
-            Console.WriteLine($"GetQuarterFirstDay: {Utils.TimeTools.GetQuarterFirstDay(dt)}");
-            Console.WriteLine($"GetYearsFirstDay: {Utils.TimeTools.GetYearsFirstDay(dt)}");
+            // dt = DateTime.Parse("2019-07-01");
+            // Console.WriteLine($"IsToday: {Utils.TimeHelper.IsToday(dt)}");
+            // Console.WriteLine($"GetMonday: {Utils.TimeHelper.GetMonday(dt)}");
+            // Console.WriteLine($"GetMonthFirstDay: {Utils.TimeHelper.GetMonthFirstDay(dt)}");
+            // Console.WriteLine($"GetQuarterFirstDay: {Utils.TimeHelper.GetQuarterFirstDay(dt)}");
+            // Console.WriteLine($"GetYearsFirstDay: {Utils.TimeHelper.GetYearsFirstDay(dt)}");
 
 
+            var path = "/Users/tanqingliang/Project/Utils/src/Demo";
+            var data = Utils.FileHelper.GetDirectoryFiles(path);
+            Console.WriteLine($"GetDirectoryFiles：{data.JsonSerializeObject()}");
+            data = Utils.FileHelper.GetDirectoryFiles(path, true);
+            Console.WriteLine($"GetDirectoryFiles：{data.JsonSerializeObject()}");
 
         }
     }

@@ -10,7 +10,7 @@ namespace Utils
     /// <summary>
     /// 时间工具
     /// </summary>
-    public class TimeTools
+    public class TimeHelper
     {
 
         /// <summary>
