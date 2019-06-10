@@ -3,7 +3,7 @@ namespace Utils
     /// <summary>
     /// （加密) 扩展属性
     /// </summary>
-    public static partial class Extensions
+    public static partial class EncodeExtensions
     {
 
 

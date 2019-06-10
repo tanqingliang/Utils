@@ -5,7 +5,7 @@ namespace Utils
     /// <summary>
     /// (时间) 扩展属性
     /// </summary>
-    public static partial class Extensions
+    public static partial class TimeExtensions
     {
 
 

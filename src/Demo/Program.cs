@@ -102,11 +102,14 @@ namespace Demo
             // Console.WriteLine($"GetYearsFirstDay: {Utils.TimeHelper.GetYearsFirstDay(dt)}");
 
 
-            var path = "/Users/tanqingliang/Project/Utils/src/Demo";
-            var data = Utils.FileHelper.GetDirectoryFiles(path);
-            Console.WriteLine($"GetDirectoryFiles：{data.JsonSerializeObject()}");
-            data = Utils.FileHelper.GetDirectoryFiles(path, true);
-            Console.WriteLine($"GetDirectoryFiles：{data.JsonSerializeObject()}");
+            // var path = "/Users/tanqingliang/Project/Utils/src/Demo";
+            // var data = Utils.FileHelper.GetDirectoryFiles(path);
+            // Console.WriteLine($"GetDirectoryFiles：{data.JsonSerializeObject()}");
+            // data = Utils.FileHelper.GetDirectoryFiles(path, true);
+            // Console.WriteLine($"GetDirectoryFiles：{data.JsonSerializeObject()}");
+
+
+            Utils.FileHelper.CreateZipFile(new string[] { "/Users/tanqingliang/Downloads/Paket/.paket" }, new string[] { "/Users/tanqingliang/Project/Utils/src/Utils/Utils.csproj" }, $"/Users/tanqingliang/Project/Utils/src/Demo/temp/{Utils.RandomHelper.GenerateGuId()}.zip");
 
         }
     }

@@ -3,7 +3,7 @@ namespace Utils
     /// <summary>
     /// （随机数) 扩展属性
     /// </summary>
-    public static partial class Extensions
+    public static partial class RandomExtensions
     {
         /// <summary>
         /// 生成随机字符串
@@ -12,7 +12,7 @@ namespace Utils
         /// <returns></returns>
         public static string GenerateString(this int length)
         {
-            return Randoms.GenerateString(length);
+            return RandomHelper.GenerateString(length);
         }
 
 
@@ -23,7 +23,7 @@ namespace Utils
         /// <returns></returns>
         public static string GenerateLetterString(this int length)
         {
-            return Randoms.GenerateLetterString(length);
+            return RandomHelper.GenerateLetterString(length);
         }
 
         /// <summary>
@@ -33,7 +33,7 @@ namespace Utils
         /// <returns></returns>
         public static string GenerateNumberString(this int length)
         {
-            return Randoms.GenerateNumberString(length);
+            return RandomHelper.GenerateNumberString(length);
         }
 
 
@@ -44,7 +44,7 @@ namespace Utils
         /// <returns></returns>
         public static int GenerateNumber(this int MaxValue)
         {
-            return Randoms.GenerateNumber(MaxValue);
+            return RandomHelper.GenerateNumber(MaxValue);
         }
 
 

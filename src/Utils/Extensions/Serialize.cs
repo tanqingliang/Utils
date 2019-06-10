@@ -5,7 +5,7 @@ namespace Utils
     /// <summary>
     /// （序列化) 扩展属性
     /// </summary>
-    public static partial class Extensions
+    public static partial class SerializeExtensions
     {
 
 

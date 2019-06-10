@@ -9,7 +9,7 @@ namespace Utils
     /// <summary>
     /// 随机数
     /// </summary>
-    public class Randoms
+    public class RandomHelper
     {
         /// <summary>
         /// 字符集
