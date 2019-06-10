@@ -14,10 +14,10 @@ namespace Utils
     /// <summary>
     /// 格式化
     /// </summary>
-    public class Formats
-    {
+    // public class FormatHelper
+    // {
 
 
 
-    }
+    // }
 }
