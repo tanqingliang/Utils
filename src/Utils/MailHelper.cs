@@ -14,7 +14,6 @@ namespace Utils
     public class MailHelper
     {
 
-
         /// <summary>
         /// 发送邮件
         /// </summary>
@@ -127,4 +126,5 @@ namespace Utils
         /// <value></value>
         public string FromAddress { set; get; }
     }
+
 }

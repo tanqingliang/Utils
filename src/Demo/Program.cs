@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Security.Cryptography;
 using Utils;
+using System.Collections.Generic;
+using System.IO;
 
 namespace Demo
 {
@@ -108,8 +110,15 @@ namespace Demo
             // data = Utils.FileHelper.GetDirectoryFiles(path, true);
             // Console.WriteLine($"GetDirectoryFiles：{data.JsonSerializeObject()}");
 
+            // Utils.FileHelper.CreateZipFile(new string[] { "/Users/tanqingliang/Downloads/Paket/.paket" }, new string[] { "/Users/tanqingliang/Project/Utils/src/Utils/Utils.csproj" }, $"/Users/tanqingliang/Project/Utils/src/Demo/temp/{Utils.RandomHelper.GenerateGuId()}.zip");
 
-            Utils.FileHelper.CreateZipFile(new string[] { "/Users/tanqingliang/Downloads/Paket/.paket" }, new string[] { "/Users/tanqingliang/Project/Utils/src/Utils/Utils.csproj" }, $"/Users/tanqingliang/Project/Utils/src/Demo/temp/{Utils.RandomHelper.GenerateGuId()}.zip");
+            var data = new List<TestModel>(){
+                new TestModel(){Name="测试"}
+            };
+
+            // 导出
+            // Utils.ExportHelper.Excel("./test.xlsx", data);
+            // Utils.ExportHelper.Excel("./test.xlsx", new Dictionary<string);
 
         }
     }
