@@ -1,6 +1,5 @@
 namespace Utils
 {
-
     using System;
     using System.Collections.Generic;
     using System.Linq;
@@ -15,9 +14,6 @@ namespace Utils
     /// </summary>
     public class ExportHelper
     {
-
-
-
         /// <summary>
         /// 导出excel
         /// </summary>

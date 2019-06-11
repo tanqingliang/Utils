@@ -21,7 +21,16 @@ namespace Utils
             return RegexHelper.IsMatch(inputStr, patternStr, false, false);
         }
 
+        /// <summary>
+        /// 判断字符串是否为空
+        /// </summary>
+        /// <param name="input">待验证的字符串</param>
+        /// <returns></returns>
+        public static bool IsEmpty(this string input)
+        {
+            return RegexHelper.IsEmpty(input);
 
+        }
 
 
         /// <summary>
@@ -178,9 +187,9 @@ namespace Utils
         /// </summary>
         /// <param name="input">待验证的字符串</param>
         /// <returns>是否匹配</returns>
-        public static bool IsURL(this string input)
+        public static bool IsUrl(this string input)
         {
-            return RegexHelper.IsURL(input);
+            return RegexHelper.IsUrl(input);
         }
 
 

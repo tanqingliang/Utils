@@ -45,6 +45,20 @@ namespace Utils
         }
 
 
+        /// <summary>
+        /// 判断字符串是否为空
+        /// </summary>
+        /// <param name="input">待验证的字符串</param>
+        /// <returns></returns>
+        public static bool IsEmpty( string input)
+        {
+            if (string.IsNullOrEmpty(input)) return true;
+
+            if (input.Trim() == string.Empty) return true;
+
+            return false;
+        }
+
 
         /// <summary>
         /// 验证数字(double类型)
@@ -270,7 +284,7 @@ namespace Utils
         /// </summary>
         /// <param name="input">待验证的字符串</param>
         /// <returns>是否匹配</returns>
-        public static bool IsURL(string input)
+        public static bool IsUrl(string input)
         {
             ////每级域名由字母、数字和减号构成（第一个字母不能是减号），不区分大小写，单个域长度不超过63，完整的域名全长不超过256个字符。在DNS系统中，全名是以一个点“.”来结束的，例如“www.nit.edu.cn.”。没有最后的那个点则表示一个相对地址。 
             ////没有例如"http://"的前缀，没有传参的匹配
