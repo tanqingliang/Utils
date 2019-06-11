@@ -120,6 +120,10 @@ namespace Demo
             // Utils.ExportHelper.Excel("./test.xlsx", data);
             // Utils.ExportHelper.Excel("./test.xlsx", new Dictionary<string);
 
+            // 图片
+            Utils.ImageHelper.GenerateVerifyCode("./verifycode.jpg", "1234");
+            Utils.ImageHelper.GenerateQRCode("./qrcode.jpg", "呵呵", QRCoder.QRCodeGenerator.ECCLevel.H, true, false);
+
         }
     }
 
