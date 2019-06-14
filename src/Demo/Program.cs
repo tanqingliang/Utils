@@ -70,25 +70,25 @@ namespace Demo
             // Console.WriteLine($"Base64Decode: {data}");
 
 
-            // var obj = new TestModel()
-            // {
-            //     Name = "test"
-            // };
-            // var data = Utils.Serialize.JsonSerializeObject(obj);
-            // Console.WriteLine($"JsonSerializeObject: {data}");
-            // obj = Utils.Serialize.JsonDeserializeObject<TestModel>(data);
-            // Console.WriteLine($"JsonDeserializeObject: {obj.Name}");
+            var obj = new TestModel()
+            {
+                Name = "test"
+            };
+            var data = Utils.Serialize.JsonSerializeObject(obj);
+            Console.WriteLine($"JsonSerializeObject: {data}");
+            obj = Utils.Serialize.JsonDeserializeObject<TestModel>(data);
+            Console.WriteLine($"JsonDeserializeObject: {obj.Name}");
 
-            // Console.WriteLine($"JsonDeserializeXmlNode: {Utils.Serialize.JsonDeserializeXmlNode(data)}");
+            Console.WriteLine($"JsonDeserializeXmlNode: {Utils.Serialize.JsonDeserializeXmlNode(data)}");
 
 
-            // data = Utils.Serialize.XmlSerializeObject(obj);
-            // Console.WriteLine($"XmlSerializeObject: {data}");
+            data = Utils.Serialize.XmlSerializeObject(obj);
+            Console.WriteLine($"XmlSerializeObject: {data}");
 
-            // Console.WriteLine($"JsonSerializeXmlNode: {Utils.Serialize.JsonSerializeXmlNode(data)}");
+            Console.WriteLine($"JsonSerializeXmlNode: {Utils.Serialize.JsonSerializeXmlNode(data)}");
 
-            // var newObj = Utils.Serialize.XmlDeserializeObject<TestModel>(data);
-            // Console.WriteLine($"XmlDeserializeObject: {newObj.Name}");
+            var newObj = Utils.Serialize.XmlDeserializeObject<TestModel>(data);
+            Console.WriteLine($"XmlDeserializeObject: {newObj.Name}");
 
             // var dt = DateTime.Now;
             // Console.WriteLine($"dt: {dt}");
@@ -111,10 +111,7 @@ namespace Demo
             // Console.WriteLine($"GetDirectoryFiles：{data.JsonSerializeObject()}");
 
             // Utils.FileHelper.CreateZipFile(new string[] { "/Users/tanqingliang/Downloads/Paket/.paket" }, new string[] { "/Users/tanqingliang/Project/Utils/src/Utils/Utils.csproj" }, $"/Users/tanqingliang/Project/Utils/src/Demo/temp/{Utils.RandomHelper.GenerateGuId()}.zip");
-
-            var data = new List<TestModel>(){
-                new TestModel(){Name="测试"}
-            };
+            
 
             // 导出
             // Utils.ExportHelper.Excel("./test.xlsx", data);

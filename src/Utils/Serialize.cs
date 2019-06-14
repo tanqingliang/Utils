@@ -92,7 +92,10 @@ namespace Utils
 
             using (MemoryStream memStream = new MemoryStream())
             {
-                s.Serialize(memStream, input);
+
+                XmlSerializerNamespaces namespaces = new XmlSerializerNamespaces();
+                namespaces.Add(string.Empty, string.Empty);
+                s.Serialize(memStream, input, namespaces);
 
                 return Encoding.UTF8.GetString(memStream.ToArray());
             }
