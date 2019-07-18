@@ -1,9 +1,9 @@
-namespace Utils
+namespace Utils.Extensions
 {
     using System;
 
     /// <summary>
-    /// (正则验证) 扩展属性
+    /// (正则验证) 扩展方法
     /// </summary>
     public static partial class RegexExtensions
     {
@@ -21,15 +21,19 @@ namespace Utils
             return RegexHelper.IsMatch(inputStr, patternStr, false, false);
         }
 
+
         /// <summary>
         /// 判断字符串是否为空
         /// </summary>
         /// <param name="input">待验证的字符串</param>
         /// <returns></returns>
-        public static bool IsEmpty(this string input)
+        public static bool IsNullOrEmpty(this string input)
         {
-            return RegexHelper.IsEmpty(input);
+            if (string.IsNullOrEmpty(input)) return true;
 
+            if (input.Trim() == string.Empty) return true;
+
+            return false;
         }
 
 
@@ -54,26 +58,6 @@ namespace Utils
             return RegexHelper.IsInteger(input);
         }
 
-        /// <summary>
-        /// 验证非负整数
-        /// </summary>
-        /// <param name="input">待验证的字符串</param>
-        /// <returns>是否匹配</returns>
-        public static bool IsIntegerNotNagtive(this string input)
-        {
-            return RegexHelper.IsIntegerNotNagtive(input);
-
-        }
-
-        /// <summary>
-        /// 验证正整数
-        /// </summary>
-        /// <param name="input">待验证的字符串</param>
-        /// <returns>是否匹配</returns>
-        public static bool IsIntegerPositive(this string input)
-        {
-            return RegexHelper.IsIntegerPositive(input);
-        }
 
         /// <summary>
         /// 验证小数

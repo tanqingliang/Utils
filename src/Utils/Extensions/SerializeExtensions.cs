@@ -1,9 +1,9 @@
-namespace Utils
+namespace Utils.Extensions
 {
     using System.Xml;
 
     /// <summary>
-    /// （序列化) 扩展属性
+    /// （序列化) 扩展方法
     /// </summary>
     public static partial class SerializeExtensions
     {
@@ -17,7 +17,7 @@ namespace Utils
         /// <returns></returns>
         public static string JsonSerializeObject<T>(this T input)
         {
-            return Serialize.JsonSerializeObject(input);
+            return SerializeHelper.JsonSerializeObject(input);
         }
         /// <summary>
         /// 字符串 序列化 对象
@@ -27,7 +27,7 @@ namespace Utils
         /// <returns></returns>
         public static T JsonDeserializeObject<T>(this string input)
         {
-            return Serialize.JsonDeserializeObject<T>(input);
+            return SerializeHelper.JsonDeserializeObject<T>(input);
         }
 
         /// <summary>
@@ -37,7 +37,7 @@ namespace Utils
         /// <returns></returns>
         public static string JsonSerializeXmlNode(this string input)
         {
-            return Serialize.JsonSerializeXmlNode(input);
+            return SerializeHelper.JsonSerializeXmlNode(input);
         }
         /// <summary>
         /// XML序列化 JSON字符串
@@ -46,7 +46,7 @@ namespace Utils
         /// <returns></returns>
         public static string JsonSerializeXmlNode(this XmlNode input)
         {
-            return Serialize.JsonSerializeXmlNode(input);
+            return SerializeHelper.JsonSerializeXmlNode(input);
         }
         /// <summary>
         /// JSON字符 序列化 XML
@@ -55,7 +55,7 @@ namespace Utils
         /// <returns></returns>
         public static XmlNode JsonDeserializeXmlNode(this string input)
         {
-            return Serialize.JsonDeserializeXmlNode(input);
+            return SerializeHelper.JsonDeserializeXmlNode(input);
         }
 
 
@@ -70,7 +70,7 @@ namespace Utils
         /// <returns></returns>
         public static string XmlSerializeObject<T>(this T input)
         {
-            return Serialize.XmlSerializeObject(input);
+            return SerializeHelper.XmlSerializeObject(input);
         }
 
         /// <summary>
@@ -81,7 +81,7 @@ namespace Utils
         /// <returns></returns>
         public static T XmlDeserializeObject<T>(this string input)
         {
-            return Serialize.XmlDeserializeObject<T>(input);
+            return SerializeHelper.XmlDeserializeObject<T>(input);
         }
 
 

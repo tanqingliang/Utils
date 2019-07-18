@@ -14,7 +14,7 @@ namespace Utils
     /// <summary>
     /// 序列化
     /// </summary>
-    public class Serialize
+    public class SerializeHelper
     {
 
         /// <summary>

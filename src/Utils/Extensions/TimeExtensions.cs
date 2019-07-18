@@ -1,14 +1,12 @@
-namespace Utils
+namespace Utils.Extensions
 {
     using System;
 
     /// <summary>
-    /// (时间) 扩展属性
+    /// (时间) 扩展方法
     /// </summary>
     public static partial class TimeExtensions
     {
-
-
 
         /// <summary>
         /// 时间 -> 时间戳

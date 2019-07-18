@@ -21,7 +21,7 @@ namespace Utils
         /// <param name="to">收件人</param>
         /// <param name="subject">发送主题</param>
         /// <param name="body">发送内容</param>
-        public static void Send(MailConfig cof, string[] to, string subject, string body)
+        public static void Send(Config.Mail cof, string[] to, string subject, string body)
         {
             BodyBuilder bodyBuilder = new BodyBuilder();
             bodyBuilder.HtmlBody = body;
@@ -35,7 +35,7 @@ namespace Utils
         /// <param name="to">收件人</param>
         /// <param name="subject">发送主题</param>
         /// <param name="body">发送内容</param>
-        public static void Send(MailConfig cof, string[] to, string subject, BodyBuilder body)
+        public static void Send(Config.Mail cof, string[] to, string subject, BodyBuilder body)
         {
             InternetAddressList toList = new InternetAddressList();
             foreach (var item in to)
@@ -54,7 +54,7 @@ namespace Utils
         /// <param name="cc">密抄人</param>
         /// <param name="subject">发送主题</param>
         /// <param name="body">发送内容</param>
-        public static void Send(MailConfig cof, InternetAddressList to, InternetAddressList cc, InternetAddressList bcc, string subject, BodyBuilder body)
+        public static void Send(Config.Mail cof, InternetAddressList to, InternetAddressList cc, InternetAddressList bcc, string subject, BodyBuilder body)
         {
             using (var client = new SmtpClient())
             {
@@ -85,46 +85,6 @@ namespace Utils
         }
     }
 
-    /// <summary>
-    /// 发送邮箱配置
-    /// </summary>
-    public class MailConfig
-    {
-        /// <summary>
-        /// SMTP 服务地址
-        /// </summary>
-        /// <value></value>
-        public string SmtpHost { set; get; }
-        /// <summary>
-        /// SMTP 服务端口
-        /// </summary>
-        /// <value></value>
-        public int SmtpPort { set; get; }
-        /// <summary>
-        /// SMTP 是否SSL加密
-        /// </summary>
-        /// <value></value>
-        public bool SmtpSsl { set; get; }
-        /// <summary>
-        /// 用户名
-        /// </summary>
-        /// <value></value>
-        public string UserName { set; get; }
-        /// <summary>
-        /// 密码
-        /// </summary>
-        /// <value></value>
-        public string Password { set; get; }
-        /// <summary>
-        /// 发送人
-        /// </summary>
-        /// <value></value>
-        public string FromName { set; get; }
-        /// <summary>
-        /// 发送人邮箱地址
-        /// </summary>
-        /// <value></value>
-        public string FromAddress { set; get; }
-    }
+
 
 }

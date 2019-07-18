@@ -6,6 +6,7 @@ namespace Utils
     using System.Text;
     using System.IO;
     using System.Net;
+    using Extensions;
 
     /// <summary>
     /// 编码
@@ -20,6 +21,9 @@ namespace Utils
         /// <returns></returns>
         public static string UrlEncode(string input)
         {
+            if (input.IsNullOrEmpty())
+                return string.Empty;
+
             return WebUtility.UrlEncode(input);
         }
         /// <summary>
@@ -29,6 +33,9 @@ namespace Utils
         /// <returns></returns>
         public static string UrlDecode(string input)
         {
+            if (input.IsNullOrEmpty())
+                return string.Empty;
+
             return WebUtility.UrlDecode(input);
         }
 
@@ -39,6 +46,9 @@ namespace Utils
         /// <returns></returns>
         public static string HtmlEncode(string input)
         {
+            if (input.IsNullOrEmpty())
+                return string.Empty;
+
             return WebUtility.HtmlEncode(input);
         }
         /// <summary>
@@ -48,6 +58,9 @@ namespace Utils
         /// <returns></returns>
         public static string HtmlDecode(string input)
         {
+            if (input.IsNullOrEmpty())
+                return string.Empty;
+
             return WebUtility.HtmlDecode(input);
         }
 
@@ -59,7 +72,7 @@ namespace Utils
         /// <returns></returns>
         public static string Base64Encode(string input)
         {
-            if (string.IsNullOrEmpty(input))
+            if (input.IsNullOrEmpty())
                 return string.Empty;
 
             byte[] bytes = Encoding.UTF8.GetBytes(input);
@@ -72,7 +85,7 @@ namespace Utils
         /// <returns></returns>
         public static string Base64Decode(string input)
         {
-            if (string.IsNullOrEmpty(input))
+            if (input.IsNullOrEmpty())
                 return string.Empty;
 
             byte[] bytes = Convert.FromBase64String(input);

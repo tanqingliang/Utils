@@ -7,11 +7,12 @@ namespace Utils
     using System.IO;
     using System.Net;
     using System.Security.Cryptography;
+    using Extensions;
 
     /// <summary>
     /// 加密&解密
     /// </summary>
-    public class Crypt
+    public class CryptHelper
     {
 
         /// <summary>
@@ -21,15 +22,7 @@ namespace Utils
         /// <returns></returns>
         public static string HashMd5(string input)
         {
-            if (string.IsNullOrEmpty(input))
-                return string.Empty;
-
-            using (var hash = MD5.Create())
-            {
-                byte[] data = hash.ComputeHash(Encoding.UTF8.GetBytes(input));
-
-                return BytesToString(data);
-            }
+            return Hash(MD5.Create(), input);
         }
 
         /// <summary>
@@ -39,15 +32,7 @@ namespace Utils
         /// <returns></returns>
         public static string HashSha1(string input)
         {
-            if (string.IsNullOrEmpty(input))
-                return string.Empty;
-
-            using (var hash = SHA1.Create())
-            {
-                byte[] data = hash.ComputeHash(Encoding.UTF8.GetBytes(input));
-
-                return BytesToString(data);
-            }
+            return Hash(SHA1.Create(), input);
         }
 
         /// <summary>
@@ -57,15 +42,7 @@ namespace Utils
         /// <returns></returns>
         public static string HashSha256(string input)
         {
-            if (string.IsNullOrEmpty(input))
-                return string.Empty;
-
-            using (var hash = SHA256.Create())
-            {
-                byte[] data = hash.ComputeHash(Encoding.UTF8.GetBytes(input));
-
-                return BytesToString(data);
-            }
+            return Hash(SHA256.Create(), input);
         }
 
         /// <summary>
@@ -75,15 +52,7 @@ namespace Utils
         /// <returns></returns>
         public static string HashSha384(string input)
         {
-            if (string.IsNullOrEmpty(input))
-                return string.Empty;
-
-            using (var hash = SHA384.Create())
-            {
-                byte[] data = hash.ComputeHash(Encoding.UTF8.GetBytes(input));
-
-                return BytesToString(data);
-            }
+            return Hash(SHA384.Create(), input);
         }
 
         /// <summary>
@@ -93,17 +62,8 @@ namespace Utils
         /// <returns></returns>
         public static string HashSha512(string input)
         {
-            if (string.IsNullOrEmpty(input))
-                return string.Empty;
-
-            using (var hash = SHA512.Create())
-            {
-                byte[] data = hash.ComputeHash(Encoding.UTF8.GetBytes(input));
-
-                return BytesToString(data);
-            }
+            return Hash(SHA512.Create(), input);
         }
-
 
 
         /// <summary>
@@ -114,15 +74,7 @@ namespace Utils
         /// <returns></returns>
         public static string HashHmacSha1(string key, string input)
         {
-            if (string.IsNullOrEmpty(input))
-                return string.Empty;
-
-            using (var hash = new HMACSHA1(Encoding.UTF8.GetBytes(key)))
-            {
-                byte[] data = hash.ComputeHash(Encoding.UTF8.GetBytes(input));
-
-                return BytesToString(data);
-            }
+            return Hash(new HMACSHA1(key.BytesEncode()), input);
         }
 
 
@@ -134,15 +86,7 @@ namespace Utils
         /// <returns></returns>
         public static string HashHmacSha256(string key, string input)
         {
-            if (string.IsNullOrEmpty(input))
-                return string.Empty;
-
-            using (var hash = new HMACSHA256(Encoding.UTF8.GetBytes(key)))
-            {
-                byte[] data = hash.ComputeHash(Encoding.UTF8.GetBytes(input));
-
-                return BytesToString(data);
-            }
+            return Hash(new HMACSHA256(key.BytesEncode()), input);
         }
 
         /// <summary>
@@ -153,15 +97,7 @@ namespace Utils
         /// <returns></returns>
         public static string HashHmacSha384(string key, string input)
         {
-            if (string.IsNullOrEmpty(input))
-                return string.Empty;
-
-            using (var hash = new HMACSHA384(Encoding.UTF8.GetBytes(key)))
-            {
-                byte[] data = hash.ComputeHash(Encoding.UTF8.GetBytes(input));
-
-                return BytesToString(data);
-            }
+            return Hash(new HMACSHA384(key.BytesEncode()), input);
         }
 
         /// <summary>
@@ -172,15 +108,7 @@ namespace Utils
         /// <returns></returns>
         public static string HashHmacSha512(string key, string input)
         {
-            if (string.IsNullOrEmpty(input))
-                return string.Empty;
-
-            using (var hash = new HMACSHA512(Encoding.UTF8.GetBytes(key)))
-            {
-                byte[] data = hash.ComputeHash(Encoding.UTF8.GetBytes(input));
-
-                return BytesToString(data);
-            }
+            return Hash(new HMACSHA512(key.BytesEncode()), input);
         }
 
         /// <summary>
@@ -191,17 +119,46 @@ namespace Utils
         /// <returns></returns>
         public static string HashHmacMd5(string key, string input)
         {
-            if (string.IsNullOrEmpty(input))
-                return string.Empty;
-
-            using (var hash = new HMACMD5(Encoding.UTF8.GetBytes(key)))
-            {
-                byte[] data = hash.ComputeHash(Encoding.UTF8.GetBytes(input));
-
-                return BytesToString(data);
-            }
+            return Hash(new HMACMD5(key.BytesEncode()), input);
         }
 
+
+        /// <summary>
+        /// hash 加密
+        /// </summary>
+        /// <param name="hash">hash 加密对象</param>
+        /// <param name="input">加密内容</param>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
+        static string Hash<T>(T hash, string input) where T : HashAlgorithm
+        {
+            try
+            {
+                // 判断是否为空
+                if (input.IsNullOrEmpty())
+                    return string.Empty;
+
+                // hash 加密
+                byte[] data = hash.ComputeHash(input.BytesEncode());
+
+
+                StringBuilder sBuilder = new StringBuilder();
+
+                //遍历散列数据的每个字节
+                //并将每个格式化为十六进制字符串。
+                for (int i = 0; i < data.Length; i++)
+                {
+                    sBuilder.Append(data[i].ToString("x2"));
+                }
+
+                return sBuilder.ToString();
+            }
+            finally
+            {
+                hash.Clear();
+                hash.Dispose();
+            }
+        }
 
 
         /// <summary>
@@ -223,11 +180,7 @@ namespace Utils
         /// <returns></returns>
         public static string DesEncrypt(string key, string iv, string input)
         {
-            var data = DesEncrypt(
-                Encoding.UTF8.GetBytes(key),
-                Encoding.UTF8.GetBytes(iv),
-                Encoding.UTF8.GetBytes(input)
-            );
+            var data = DesEncrypt(key.BytesEncode(), iv.BytesEncode(), input.BytesEncode());
 
             return Convert.ToBase64String(data);
         }
@@ -242,11 +195,8 @@ namespace Utils
         {
             using (DES rijAlg = DES.Create())
             {
-
                 rijAlg.Key = key;
                 rijAlg.IV = iv;
-                // rijAlg.Mode = CipherMode.CBC;
-                // rijAlg.Padding = PaddingMode.PKCS7;
 
                 using (ICryptoTransform encryptor = rijAlg.CreateEncryptor())
                 {
@@ -275,8 +225,8 @@ namespace Utils
         public static string DesDecrypt(string key, string iv, string input)
         {
             var data = DesDecrypt(
-                Encoding.UTF8.GetBytes(key),
-                Encoding.UTF8.GetBytes(iv),
+                key.BytesEncode(),
+                iv.BytesEncode(),
                 Convert.FromBase64String(input)
             );
 
@@ -295,14 +245,12 @@ namespace Utils
             {
                 rijAlg.Key = key;
                 rijAlg.IV = iv;
-                // rijAlg.Mode = CipherMode.CBC;
-                // rijAlg.Padding = PaddingMode.PKCS7;
+
 
                 using (ICryptoTransform decryptor = rijAlg.CreateDecryptor())
                 {
                     return Decrypt(decryptor, input);
                 }
-
             }
         }
 
@@ -329,9 +277,9 @@ namespace Utils
         public static string AesEncrypt(string key, string iv, string input)
         {
             var data = AesEncrypt(
-                Encoding.UTF8.GetBytes(key),
-                Encoding.UTF8.GetBytes(iv),
-                Encoding.UTF8.GetBytes(input)
+                key.BytesEncode(),
+                iv.BytesEncode(),
+                input.BytesEncode()
             );
 
             return Convert.ToBase64String(data);
@@ -349,8 +297,7 @@ namespace Utils
             {
                 rijAlg.Key = key;
                 rijAlg.IV = iv;
-                // rijAlg.Mode = CipherMode.CBC;
-                // rijAlg.Padding = PaddingMode.PKCS7;
+
 
                 using (ICryptoTransform encryptor = rijAlg.CreateEncryptor())
                 {
@@ -379,9 +326,10 @@ namespace Utils
         /// <returns></returns>
         public static string AesDecrypt(string key, string iv, string input)
         {
+
             var data = AesDecrypt(
-                Encoding.UTF8.GetBytes(key),
-                Encoding.UTF8.GetBytes(iv),
+                key.BytesEncode(),
+                iv.BytesEncode(),
                 Convert.FromBase64String(input)
             );
 
@@ -398,10 +346,10 @@ namespace Utils
         {
             using (Aes rijAlg = Aes.Create())
             {
+
                 rijAlg.Key = key;
                 rijAlg.IV = iv;
-                // rijAlg.Mode = CipherMode.CBC;
-                // rijAlg.Padding = PaddingMode.PKCS7;
+
 
                 using (ICryptoTransform decryptor = rijAlg.CreateDecryptor())
                 {
@@ -410,9 +358,6 @@ namespace Utils
 
             }
         }
-
-
-
 
 
 
@@ -467,22 +412,7 @@ namespace Utils
             }
         }
 
-        /// <summary>
-        /// 字节转字符串
-        /// </summary>
-        /// <param name="data"></param>
-        /// <returns></returns>
-        static string BytesToString(byte[] data)
-        {
-            StringBuilder sBuilder = new StringBuilder();
 
-            for (int i = 0; i < data.Length; i++)
-            {
-                sBuilder.Append(data[i].ToString("x2"));
-            }
-
-            return sBuilder.ToString();
-        }
 
     }
 }

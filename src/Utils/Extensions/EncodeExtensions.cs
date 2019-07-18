@@ -1,7 +1,9 @@
 namespace Utils
 {
+    using System.Text;
+
     /// <summary>
-    /// （加密) 扩展属性
+    /// （编码) 扩展方法
     /// </summary>
     public static partial class EncodeExtensions
     {
@@ -63,6 +65,41 @@ namespace Utils
         public static string Base64Decode(this string input)
         {
             return Encode.Base64Decode(input);
+        }
+        
+
+        /// <summary>
+        /// 字符串 -> 字节流
+        /// </summary>
+        /// <param name="input">内容</param>
+        /// <param name="encode">默认utf8</param>
+        /// <returns></returns>
+        public static byte[] BytesEncode(this string input, Encoding encode = null)
+        {
+            if (encode == null)
+            {
+                encode = Encoding.UTF8;
+            }
+
+            return encode.GetBytes(input);
+        }
+
+
+        /// <summary>
+        /// 字节流 -> 字符串
+        /// </summary>
+        /// <param name="input">内容</param>
+        /// <param name="encode">默认utf8</param>
+        /// <returns></returns>
+        public static string BytesDecode(this byte[] input, Encoding encode = null)
+        {
+
+            if (encode == null)
+            {
+                encode = Encoding.UTF8;
+            }
+
+            return encode.GetString(input);
         }
 
     }

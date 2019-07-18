@@ -45,20 +45,6 @@ namespace Utils
         }
 
 
-        /// <summary>
-        /// 判断字符串是否为空
-        /// </summary>
-        /// <param name="input">待验证的字符串</param>
-        /// <returns></returns>
-        public static bool IsEmpty( string input)
-        {
-            if (string.IsNullOrEmpty(input)) return true;
-
-            if (input.Trim() == string.Empty) return true;
-
-            return false;
-        }
-
 
         /// <summary>
         /// 验证数字(double类型)
@@ -68,13 +54,8 @@ namespace Utils
         /// <returns>是否匹配</returns>
         public static bool IsNumber(string input)
         {
-            //string pattern = @"^-?\d+$|^(-?\d+)(\.\d+)?$";
-            //return IsMatch(input, pattern);
             double d = 0;
-            if (double.TryParse(input, out d))
-                return true;
-            else
-                return false;
+            return double.TryParse(input, out d);
         }
 
         /// <summary>
@@ -84,45 +65,8 @@ namespace Utils
         /// <returns>是否匹配</returns>
         public static bool IsInteger(string input)
         {
-            //string pattern = @"^-?\d+$";
-            //return IsMatch(input, pattern);
             int i = 0;
-            if (int.TryParse(input, out i))
-                return true;
-            else
-                return false;
-        }
-
-        /// <summary>
-        /// 验证非负整数
-        /// </summary>
-        /// <param name="input">待验证的字符串</param>
-        /// <returns>是否匹配</returns>
-        public static bool IsIntegerNotNagtive(string input)
-        {
-            //string pattern = @"^\d+$";
-            //return IsMatch(input, pattern);
-            int i = -1;
-            if (int.TryParse(input, out i) && i >= 0)
-                return true;
-            else
-                return false;
-        }
-
-        /// <summary>
-        /// 验证正整数
-        /// </summary>
-        /// <param name="input">待验证的字符串</param>
-        /// <returns>是否匹配</returns>
-        public static bool IsIntegerPositive(string input)
-        {
-            //string pattern = @"^[0-9]*[1-9][0-9]*$";
-            //return IsMatch(input, pattern);
-            int i = 0;
-            if (int.TryParse(input, out i) && i >= 1)
-                return true;
-            else
-                return false;
+            return int.TryParse(input, out i);
         }
 
         /// <summary>
@@ -203,10 +147,7 @@ namespace Utils
         public static bool IsDateTime(string input)
         {
             DateTime dt;
-            if (DateTime.TryParse(input, out dt))
-                return true;
-            else
-                return false;
+            return DateTime.TryParse(input, out dt);
         }
 
         /// <summary>
@@ -253,15 +194,8 @@ namespace Utils
         /// <returns>是否匹配</returns>
         public static bool IsZipCode(string input)
         {
-            //string pattern = @"^\d{6}$";
-            //return IsMatch(input, pattern);
-            if (input.Length != 6)
-                return false;
-            int i;
-            if (int.TryParse(input, out i))
-                return true;
-            else
-                return false;
+            string pattern = @"^\d{6}$";
+            return IsMatch(input, pattern);
         }
 
         /// <summary>
