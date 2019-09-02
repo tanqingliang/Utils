@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"crypto/aes"
 	"crypto/cipher"
+	"crypto/des"
 	"crypto/hmac"
 	"crypto/md5"
 	"crypto/sha1"
@@ -102,7 +103,7 @@ const (
 // Aes CBC 加密
 // input 加密的内容
 // key 加密秘钥
-// key 加密向量
+// iv 加密向量
 func AesCBCEncrypt(input, key, iv []byte) ([]byte, error) {
 	return AesEncrypt(input, key, iv, AesCBC, true)
 }
@@ -110,7 +111,7 @@ func AesCBCEncrypt(input, key, iv []byte) ([]byte, error) {
 // Aes CFB 加密
 // input 加密的内容
 // key 加密秘钥
-// key 加密向量
+// iv 加密向量
 func AesCFBEncrypt(input, key, iv []byte) ([]byte, error) {
 	return AesEncrypt(input, key, iv, AesCFB, true)
 }
@@ -118,15 +119,14 @@ func AesCFBEncrypt(input, key, iv []byte) ([]byte, error) {
 // Aes ECB 加密
 // input 加密的内容
 // key 加密秘钥
-// key 加密向量
-func AesECBEncrypt(input, key, iv []byte) ([]byte, error) {
-	return AesEncrypt(input, key, iv, AesECB, true)
+func AesECBEncrypt(input, key []byte) ([]byte, error) {
+	return AesEncrypt(input, key, nil, AesECB, true)
 }
 
 // Aes 加密
 // input 加密的内容
 // key 加密秘钥
-// key 加密向量
+// iv 加密向量
 // mode 加密模式 （cbc,cfb,ecb）
 // pkcs7 是否数据填充
 func AesEncrypt(input, key, iv []byte, mode string, pkcs7 bool) ([]byte, error) {
@@ -154,7 +154,9 @@ func AesEncrypt(input, key, iv []byte, mode string, pkcs7 bool) ([]byte, error) 
 
 	// 判断向量长度
 	if len(iv) < blockSize {
-		return nil, errors.New("IV length must equal block size")
+		return nil, errors.New("iv length must equal block size")
+	} else {
+		iv = iv[:blockSize]
 	}
 
 	// 数据填充
@@ -176,6 +178,7 @@ func AesEncrypt(input, key, iv []byte, mode string, pkcs7 bool) ([]byte, error) 
 		blockModeStream.XORKeyStream(ciphertext, input)
 
 	case AesECB:
+		ciphertext = ciphertext[:0]
 		tmpData := make([]byte, blockSize)
 		for len(input) > 0 {
 			block.Encrypt(tmpData, input)
@@ -195,7 +198,7 @@ func AesEncrypt(input, key, iv []byte, mode string, pkcs7 bool) ([]byte, error) 
 // Aes CBC 解密
 // input 加密的内容
 // key 加密秘钥
-// key 加密向量
+// iv 加密向量
 func AesCBCDecrypt(input, key, iv []byte) ([]byte, error) {
 	return AesDecrypt(input, key, iv, AesCBC, true)
 }
@@ -203,7 +206,7 @@ func AesCBCDecrypt(input, key, iv []byte) ([]byte, error) {
 // Aes CFB 解密
 // input 加密的内容
 // key 加密秘钥
-// key 加密向量
+// iv 加密向量
 func AesCFBDecrypt(input, key, iv []byte) ([]byte, error) {
 	return AesDecrypt(input, key, iv, AesCFB, true)
 }
@@ -211,15 +214,14 @@ func AesCFBDecrypt(input, key, iv []byte) ([]byte, error) {
 // Aes ECB 解密
 // input 加密的内容
 // key 加密秘钥
-// key 加密向量
-func AesECBDecrypt(input, key, iv []byte) ([]byte, error) {
-	return AesDecrypt(input, key, iv, AesECB, true)
+func AesECBDecrypt(input, key []byte) ([]byte, error) {
+	return AesDecrypt(input, key, nil, AesECB, true)
 }
 
 // Aes  解密
 // input 加密的内容
 // key 加密秘钥
-// key 加密向量
+// iv 加密向量
 // mode 加密模式 （cbc,cfb,ecb）
 // pkcs7 是否去掉数据填充
 func AesDecrypt(input, key, iv []byte, mode string, pkcs7 bool) ([]byte, error) {
@@ -247,7 +249,9 @@ func AesDecrypt(input, key, iv []byte, mode string, pkcs7 bool) ([]byte, error) 
 
 	// 判断向量长度
 	if len(iv) < blockSize {
-		return nil, errors.New("IV length must equal block size")
+		return nil, errors.New("iv length must equal block size")
+	} else {
+		iv = iv[:blockSize]
 	}
 
 	// 解密内容切片
@@ -264,6 +268,204 @@ func AesDecrypt(input, key, iv []byte, mode string, pkcs7 bool) ([]byte, error) 
 		blockModeStream.XORKeyStream(ciphertext, input)
 
 	case AesECB:
+		ciphertext = ciphertext[:0]
+		tmpData := make([]byte, blockSize)
+		for len(input) > 0 {
+			block.Decrypt(tmpData, input)
+			input = (input)[blockSize:]
+			ciphertext = append(ciphertext, tmpData...)
+		}
+
+	default:
+		return nil, errors.New("encrypter mode error")
+	}
+
+	// 去掉填充
+	if pkcs7 {
+		// fmt.Println("\n" + mode + " -> 去掉填充")
+		ciphertext = PKCS7UnPadding(ciphertext)
+	}
+	// 返回数据
+	return ciphertext, nil
+}
+
+// Des 加密模式
+const (
+	DesCBC = "cbc"
+	DesCFB = "cfb"
+	DesECB = "ecb"
+)
+
+// Des CBC 加密
+// input 加密的内容
+// key 加密秘钥
+// iv 加密向量
+func DesCBCEncrypt(input, key, iv []byte) ([]byte, error) {
+	return DesEncrypt(input, key, iv, DesCBC, true)
+}
+
+// Des CFB 加密
+// input 加密的内容
+// key 加密秘钥
+// iv 加密向量
+func DesCFBEncrypt(input, key, iv []byte) ([]byte, error) {
+	return DesEncrypt(input, key, iv, DesCFB, true)
+}
+
+// Des ECB 加密
+// input 加密的内容
+// key 加密秘钥
+// iv 加密向量
+func DesECBEncrypt(input, key []byte) ([]byte, error) {
+	return DesEncrypt(input, key, nil, DesECB, true)
+}
+
+// Des 加密
+// input 加密的内容
+// key 加密秘钥
+// iv 加密向量
+// mode 加密模式 （cbc,cfb,ecb）
+// pkcs7 是否数据填充
+func DesEncrypt(input, key, iv []byte, mode string, pkcs7 bool) ([]byte, error) {
+
+	if input == nil {
+		return nil, errors.New("content can not be blank")
+	}
+	if key == nil {
+		return nil, errors.New("Key cannot be empty")
+	}
+
+	// 创建加密算法
+	block, err := des.NewCipher(key)
+	if err != nil {
+		return nil, err
+	}
+
+	// 秘钥块的长度
+	blockSize := block.BlockSize()
+
+	// 默认向量
+	if iv == nil {
+		iv = key[:blockSize]
+	}
+
+	// 判断向量长度
+	if len(iv) < blockSize {
+		return nil, errors.New("IV length must equal block size")
+	} else {
+		iv = iv[:blockSize]
+	}
+
+	// 数据填充
+	if pkcs7 {
+		input = PKCS7Padding(input, blockSize)
+	}
+
+	// 加密内容切片
+	ciphertext := make([]byte, len(input))
+
+	// 加密模式
+	switch strings.ToLower(mode) {
+	case DesCBC:
+		blockMode := cipher.NewCBCEncrypter(block, iv)
+		blockMode.CryptBlocks(ciphertext, input)
+
+	case DesCFB:
+		blockModeStream := cipher.NewCFBEncrypter(block, iv)
+		blockModeStream.XORKeyStream(ciphertext, input)
+
+	case DesECB:
+		ciphertext = ciphertext[:0]
+		tmpData := make([]byte, blockSize)
+		for len(input) > 0 {
+			block.Encrypt(tmpData, input)
+			input = (input)[blockSize:]
+			ciphertext = append(ciphertext, tmpData...)
+		}
+
+	default:
+		return nil, errors.New("encrypter mode error")
+	}
+
+	// 返回数据
+	return ciphertext, nil
+
+}
+
+// Des CBC 解密
+// input 加密的内容
+// key 加密秘钥
+// iv 加密向量
+func DesCBCDecrypt(input, key, iv []byte) ([]byte, error) {
+	return DesDecrypt(input, key, iv, DesCBC, true)
+}
+
+// Des CFB 解密
+// input 加密的内容
+// key 加密秘钥
+// iv 加密向量
+func DesCFBDecrypt(input, key, iv []byte) ([]byte, error) {
+	return DesDecrypt(input, key, iv, DesCFB, true)
+}
+
+// Des ECB 解密
+// input 加密的内容
+// key 加密秘钥
+func DesECBDecrypt(input, key []byte) ([]byte, error) {
+	return DesDecrypt(input, key, nil, DesECB, true)
+}
+
+// Des  解密
+// input 加密的内容
+// key 加密秘钥
+// iv 加密向量
+// mode 加密模式 （cbc,cfb,ecb）
+// pkcs7 是否去掉数据填充
+func DesDecrypt(input, key, iv []byte, mode string, pkcs7 bool) ([]byte, error) {
+
+	if input == nil {
+		return nil, errors.New("content can not be blank")
+	}
+	if key == nil {
+		return nil, errors.New("Key cannot be empty")
+	}
+
+	// 创建加密算法
+	block, err := des.NewCipher(key)
+	if err != nil {
+		return nil, err
+	}
+
+	// 秘钥块的长度
+	blockSize := block.BlockSize()
+
+	// 默认向量
+	if iv == nil {
+		iv = key[:blockSize]
+	}
+
+	// 判断向量长度
+	if len(iv) < blockSize {
+		return nil, errors.New("iv length must equal block size")
+	} else {
+		iv = iv[:blockSize]
+	}
+
+	// 解密内容切片
+	ciphertext := make([]byte, len(input))
+
+	// 解密模式 -> 解密数据
+	switch strings.ToLower(mode) {
+	case DesCBC:
+		blockMode := cipher.NewCBCDecrypter(block, iv)
+		blockMode.CryptBlocks(ciphertext, input)
+
+	case DesCFB:
+		blockModeStream := cipher.NewCFBDecrypter(block, iv)
+		blockModeStream.XORKeyStream(ciphertext, input)
+
+	case DesECB:
+		ciphertext = ciphertext[:0]
 		tmpData := make([]byte, blockSize)
 		for len(input) > 0 {
 			block.Decrypt(tmpData, input)
@@ -294,7 +496,7 @@ func PKCS7Padding(ciphertext []byte, blockSize int) []byte {
 // 使用PKCS7去掉填充
 func PKCS7UnPadding(origData []byte) []byte {
 	length := len(origData)
-	unpadding := int((origData)[length-1])
-	cipherdata := (origData)[:(length - unpadding)]
+	unpadding := int(origData[length-1])
+	cipherdata := origData[:(length - unpadding)]
 	return cipherdata
 }

@@ -36,22 +36,45 @@ func TestHash(t *testing.T) {
 
 func TestAes(t *testing.T) {
 	// 加密内容
-	input := "abcdefg"
+	input := "我是加密内容"
 	key := "1234567812345612"
 	iv := "1234567812345612"
 
 	data, _ := AesCBCEncrypt([]byte(input), []byte(key), []byte(iv))
-	fmt.Printf(" AesCBCEncrypt \t %v -> %v", input, Base64Encode(data))
+	fmt.Printf(" AesCBCEncrypt \t %v -> %v \t", input, Base64Encode(data))
 	data, _ = AesCBCDecrypt(data, []byte(key), []byte(iv))
-	fmt.Printf("\n AesCBCDecrypt \t %v -> %v", input, string(data))
+	fmt.Printf("\n AesCBCDecrypt \t %v -> %v \t", input, string(data))
 
 	data, _ = AesCFBEncrypt([]byte(input), []byte(key), []byte(iv))
-	fmt.Printf("\n\n AesCFBEncrypt \t %v -> %v", input, Base64Encode(data))
+	fmt.Printf("\n\n AesCFBEncrypt \t %v -> %v \t", input, Base64Encode(data))
 	data, _ = AesCFBDecrypt(data, []byte(key), []byte(iv))
-	fmt.Printf("\n AesCFBDecrypt \t %v -> %v", input, string(data))
+	fmt.Printf("\n AesCFBDecrypt \t %v -> %v \t", input, string(data))
 
-	data, _ = AesECBEncrypt([]byte(input), []byte(key), []byte(iv))
-	fmt.Printf("\n\n AesECBEncrypt \t %v -> %v", input, Base64Encode(data))
-	data, _ = AesECBDecrypt(data, []byte(key), []byte(iv))
-	fmt.Printf("\n AesECBDecrypt \t %v -> %v", input, string(data))
+	data, _ = AesECBEncrypt([]byte(input), []byte(key))
+	fmt.Printf("\n\n AesECBEncrypt \t %v -> %v \t", input, Base64Encode(data))
+	data, _ = AesECBDecrypt(data, []byte(key))
+	fmt.Printf("\n AesECBDecrypt \t %v -> %v \n", input, string(data))
+}
+
+func TestDes(t *testing.T) {
+	// 加密内容
+	input := "我是加密内容\"abcdefg\""
+	key := "12345678"
+	iv := "12345678"
+
+	data, _ := DesCBCEncrypt([]byte(input), []byte(key), []byte(iv))
+	fmt.Printf(" DesCBCEncrypt \t %v -> %v", input, Base64Encode(data))
+	// fmt.Println(err)
+	data, _ = DesCBCDecrypt(data, []byte(key), []byte(iv))
+	fmt.Printf("\n DesCBCDecrypt \t %v -> %v", input, string(data))
+
+	data, _ = DesCFBEncrypt([]byte(input), []byte(key), []byte(iv))
+	fmt.Printf("\n\n DesCFBEncrypt \t %v -> %v", input, Base64Encode(data))
+	data, _ = DesCFBDecrypt(data, []byte(key), []byte(iv))
+	fmt.Printf("\n DesCFBDecrypt \t %v -> %v", input, string(data))
+
+	data, _ = DesECBEncrypt([]byte(input), []byte(key))
+	fmt.Printf("\n\n DesECBEncrypt \t %v -> %v", input, Base64Encode(data))
+	data, _ = DesECBDecrypt(data, []byte(key))
+	fmt.Printf("\n AesECBDecrypt \t %v -> %v \n", input, string(data))
 }
