@@ -11,8 +11,9 @@ func TestBase64(t *testing.T) {
 	input := "你好，世界！ hello world"
 
 	t.Log("原数据 -> " + input)
-
-	encodeData := Base64Encode([]byte(input))
+	b := []byte(input)
+	fmt.Printf("send %p\n", &b)
+	encodeData := Base64Encode(&b)
 	t.Log("Base64 编码 -> " + encodeData)
 
 	// decode
@@ -37,10 +38,3 @@ func TestUrl(t *testing.T) {
 	t.Log("Url 解码 -> " + dncodeData)
 
 }
-
-func Test2Ary(t *testing.T) {
-	fmt.Println([]byte("谭青亮"))
-	fmt.Println(len("谭青亮"))
-}
-
-// Binary
