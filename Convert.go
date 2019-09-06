@@ -74,6 +74,7 @@ func UnmarshalXml(data []byte, v interface{}) error {
 
 	if kind == reflect.Ptr && t.Elem().Kind() == reflect.Map {
 		nv := mapXml{}
+
 		err := xml.Unmarshal(data, &nv)
 		if err != nil {
 			return err
@@ -90,53 +91,83 @@ func UnmarshalXml(data []byte, v interface{}) error {
 type mapXml map[string]interface{}
 type xmlMapEntry struct {
 	XMLName xml.Name
-	Value   string `xml:",xml"`
+	// Value   string //`xml:",xml"`
 }
 
 // 自定义map to xml序列化
 func (m mapXml) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 
-	if len(m) == 0 {
-		return nil
+	start.Name.Local = "xml"
+
+	tokens := []xml.Token{start}
+
+	for key, value := range m {
+
+		t := xml.StartElement{Name: xml.Name{"", key}}
+
+		// 转换字符串字节
+		s := fmt.Sprintf("%v", value.(interface{}))
+
+		tokens = append(tokens, t, xml.CharData(s), xml.EndElement{t.Name})
 	}
 
-	err := e.EncodeToken(start)
+	tokens = append(tokens, start.End())
+
+	for _, t := range tokens {
+		err := e.EncodeToken(t)
+		if err != nil {
+			return err
+		}
+	}
+
+	// flush to ensure tokens are written
+	err := e.Flush()
 	if err != nil {
 		return err
 	}
 
-	for k, v := range m {
-		// 转换字符串字节
-		s := fmt.Sprintf("%v", v.(interface{}))
+	return nil
 
-		e.Encode(xmlMapEntry{XMLName: xml.Name{Local: k}, Value: s})
-	}
-
-	return e.EncodeToken(start.End())
 }
 
 // 自定义xml to map反序列化
 func (m *mapXml) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	*m = mapXml{}
-	// fmt.Println(m)
-	for {
-		var e xmlMapEntry
 
-		err := d.Decode(&e)
+	// 健
+	var skey string
+
+	for {
+		t, err := d.Token()
 		if err == io.EOF {
 			break
 		} else if err != nil {
 			return err
 		}
 
-		(*m)[e.XMLName.Local] = e.Value
+		switch t.(type) {
+		case xml.StartElement:
+			skey = t.(xml.StartElement).Name.Local
+			break
+
+		case xml.EndElement:
+			skey = ""
+			break
+
+		case xml.CharData:
+			if skey != "" {
+				(*m)[skey] = string(t.(xml.CharData))
+				// fmt.Printf("%v = %v\n", skey, (*m)[skey])
+			}
+		default:
+			// noop
+		}
 	}
-	// fmt.Println(m)
+
 	return nil
 }
 
 // Struct 转 Map 格式数据
-// v 需转换数据 ,注：只支持Struct对象
+// v 需转换数据 ,注：只支持 Struct
 func StructToMap(v interface{}) (map[string]interface{}, error) {
 
 	// 判断对象是否为空

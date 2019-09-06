@@ -21,7 +21,7 @@ func TestMarshalJson(t *testing.T) {
 
 	newData := map[string]interface{}{}
 
-	err = UnmarshalJson(b, newData)
+	err = UnmarshalJson(b, &newData)
 	fmt.Printf("反序列化数据：%v err: %v \n", newData, err)
 
 }
@@ -38,7 +38,10 @@ func TestMarshalXml(t *testing.T) {
 	b, err := MarshalXml(&data)
 	fmt.Printf("序列化数据：%v err: %v \n", string(b), err)
 
-	newData := map[string]interface{}{}
+	newData := map[string]interface{}{
+		"a": 10,
+		"e": 101,
+	}
 	err = UnmarshalXml(b, &newData)
 	fmt.Printf("反序列数据：%v ,err: %v \n", newData, err)
 
